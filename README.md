@@ -1,1 +1,1 @@
-# js_orm
+# js-orm
