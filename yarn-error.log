@@ -1,0 +1,36 @@
+Arguments: 
+  C:\Program Files\nodejs\node.exe C:\Users\Neptune\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js init .
+
+PATH: 
+  C:\Program Files\PowerShell\7-preview;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\NVIDIA Corporation\NVIDIA NvDLISR;C:\Program Files\nodejs\;C:\Program Files\Git\cmd;C:\Strawberry\c\bin;C:\Strawberry\perl\site\bin;C:\Strawberry\perl\bin;C:\Program Files\Microsoft SQL Server\130\Tools\Binn\;C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\170\Tools\Binn\;C:\HashiCorp\Vagrant\bin;C:\Program Files\PuTTY\;C:\Program Files\PowerShell\7-preview\preview;C:\Program Files\Go\bin;C:\Program Files\dotnet\;C:\Program Files\Docker\Docker\resources\bin;C:\ProgramData\DockerDesktop\version-bin;C:\Ruby30-x64\bin;C:\Users\Neptune\AppData\Local\Programs\Python\Python39\Scripts\;C:\Users\Neptune\AppData\Local\Programs\Python\Python39\;C:\Users\Neptune\AppData\Local\Microsoft\WindowsApps;C:\Users\Neptune\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\Neptune\AppData\Local\GitHubDesktop\bin;C:\Users\Neptune\AppData\Roaming\npm;C:\flutter\bin;C:\Users\Neptune\AppData\Local\Programs\MiKTeX\miktex\bin\x64\;C:\Program Files\JetBrains\DataGrip 2020.3.2\bin;C:\Users\Neptune\go\bin;C:\Users\Neptune\.dotnet\tools
+
+Yarn version: 
+  1.22.10
+
+Node version: 
+  15.5.0
+
+Platform: 
+  win32 x64
+
+Trace: 
+  Error: canceled
+      at Interface.<anonymous> (C:\Users\Neptune\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:136216:13)
+      at Interface.emit (node:events:376:20)
+      at Interface._ttyWrite (node:readline:909:16)
+      at ReadStream.onkeypress (node:readline:234:10)
+      at ReadStream.emit (node:events:376:20)
+      at emitKeys (node:internal/readline/utils:358:14)
+      at emitKeys.next (<anonymous>)
+      at ReadStream.onData (node:readline:1178:36)
+      at ReadStream.emit (node:events:376:20)
+      at addChunk (node:internal/streams/readable:311:12)
+
+npm manifest: 
+  No manifest
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile

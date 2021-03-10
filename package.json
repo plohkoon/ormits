@@ -1,0 +1,10 @@
+{
+  "name": "js-orm",
+  "version": "0.1.0",
+  "description": "Typescript Implementation ORM",
+  "main": "index.js",
+  "repository": "https://github.com/plohkoon/js-orm.git",
+  "author": "greg.huber@outlook.com",
+  "license": "GNU",
+  "private": true
+}
