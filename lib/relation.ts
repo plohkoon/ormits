@@ -5,13 +5,15 @@ import { sql } from './sql';
 interface QueryType<T> {
   select: Set<KeysOf<T>>;
   where: string[];
+  order: string[];
 }
 
 class Relation<T> extends Array<T> {
   private data: T[] = [];
   private query: QueryType<T> = {
     select: new Set(),
-    where: []
+    where: [],
+    order: []
   };
 
   select(fields: KeysOf<T>[]) : Relation<T> {
@@ -27,7 +29,7 @@ class Relation<T> extends Array<T> {
         equiv = '!=';
       }
 
-      stringedCondition = Object.keys(condition).map((key: KeysOf<T>) => `${key} ${equiv} "${condition[key]}"`).join(" AND ")
+      stringedCondition = Object.keys(condition).map((key: KeysOf<T>) => `${key} ${equiv} "${condition[key]}"`).join(" AND ");
     } else {
       stringedCondition = condition;
     }
@@ -35,17 +37,35 @@ class Relation<T> extends Array<T> {
     return this;
   }
 
+  order(order: string | Record<KeysOf<T>, "ASC" | "DESC">) : Relation<T> {
+    let stringedOrder : string = '';
+    if (typeof order !== "string") {
+      stringedOrder = Object.keys(order).map((key: KeysOf<T>) => `${key} ${order[key]}`).join(" ");
+    } else {
+      stringedOrder = order
+    }
+
+    this.query.order.push(stringedOrder);
+    return this;
+  }
+
   async all() : Promise<T[]> {
-    let { select, where } = this.query;
+    let { select, where, order } = this.query;
 
     let selects: string = select.size > 0 ?
         Array.from(this.query.select).join(', ') : "*";
 
-    let wheres: string = where.length > 0 ? "where " + where.map((str) => `(${str})`).join(" AND ") : '';
+    let wheres: string = where.length > 0 ? "WHERE " + where.map((str) => `(${str})`).join(" AND ") : '';
 
-    return db.all(sql`
-      SELECT ${selects} FROM test ${wheres};
-    `);
+    let orders: string = order.length > 0 ? "ORDER BY " + order.map((str) => `${str}`).join(", ") : '';
+
+    let sqlString : string = sql`
+      SELECT ${selects} FROM test ${wheres} ${orders};
+    `
+
+    console.log(sqlString);
+
+    return db.all(sqlString);
   }
 
   // get all() : T[] {

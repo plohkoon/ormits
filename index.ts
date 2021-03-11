@@ -15,7 +15,8 @@ import Relation from './lib/relation';
 let relation = new Relation<Test>()
 
 relation = relation.select(["id", "name"]);
-relation = relation.where({ id: 1 });
-relation = relation.where('name = "bob"');
-relation = relation.where({id: 2}, true);
-await relation.all().then(res => console.log(res));
+// relation = relation.where({ id: 1 });
+// relation = relation.where('name = "bob"');
+// relation = relation.where({id: 2}, true);
+relation = relation.order({id: "DESC"})
+relation.all().then(res => console.log(res));
