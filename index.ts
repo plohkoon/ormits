@@ -1,9 +1,5 @@
 
-import Relation, { Database } from './lib/relation';
-import { sql } from './lib/sql';
-import { RunResult } from 'sqlite3';
-
-// Database.run(".tables").then((res: RunResult) => console.log("yay"));
+import Relation from './lib/relation';
 
 // Database.run(sql`
 //   CREATE TABLE IF NOT EXISTS test(
@@ -16,6 +12,10 @@ import { RunResult } from 'sqlite3';
 //   SELECT * FROM test;
 // `).then((res: any) => console.log(res));
 
-new Relation<Test>().select(["id", "name"]).all;
+let relation = new Relation<Test>()
 
-Database.close().then(() => process.exit(0));
+relation = relation.select(["id", "name"]);
+relation = relation.where({ id: 1 });
+relation = relation.where('name = "bob"');
+relation = relation.where({id: 2}, true);
+await relation.all().then(res => console.log(res));

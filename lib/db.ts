@@ -46,6 +46,7 @@ class AsyncDatabase {
   all(sql: string, params: any=[]) : Promise<any[]> {
     return new Promise((resolve, reject) => {
       this.db.all(sql, params, function(err, rows) {
+        console.log(sql, err, rows);
         if(err) reject(err);
         else resolve(rows);
       });

@@ -3,39 +3,62 @@ import db from './db';
 import { sql } from './sql';
 
 interface QueryType<T> {
-  select: Set<KeysMatching<T, string>>;
+  select: Set<KeysOf<T>>;
+  where: string[];
 }
 
 class Relation<T> extends Array<T> {
-  data: T[];
-  query: QueryType<T>;
+  private data: T[] = [];
+  private query: QueryType<T> = {
+    select: new Set(),
+    where: []
+  };
 
-  constructor() {
-    super();
-    this.data = [];
-    this.query = {
-      select: new Set()
-    };
-  }
-
-  select(fields: KeysMatching<T, string>[]) : Relation<T> {
+  select(fields: KeysOf<T>[]) : Relation<T> {
     fields.forEach((f) => this.query.select.add(f));
     return this;
   }
 
-  get all() : T[] {
-    let selects: string = this.query.select.size > 0 ?
-        Array.from(this.query.select).join(', ') : "*";
-    console.log(selects);
-    return this.data;
-    // sql`
-    //  SELECT ${selects} FROM ${T.name}
-    // `;
+  where(condition: string | Record<KeysOf<T>, any>, not: boolean = false) : Relation<T> {
+    let stringedCondition : string = '';
+    if (typeof condition !== "string") {
+      let equiv : '=' | '!=' = '=';
+      if (not) {
+        equiv = '!=';
+      }
+
+      stringedCondition = Object.keys(condition).map((key: KeysOf<T>) => `${key} ${equiv} "${condition[key]}"`).join(" AND ")
+    } else {
+      stringedCondition = condition;
+    }
+    this.query.where.push(stringedCondition);
+    return this;
   }
 
-  get items() : T[] {
-    return this.all;
+  async all() : Promise<T[]> {
+    let { select, where } = this.query;
+
+    let selects: string = select.size > 0 ?
+        Array.from(this.query.select).join(', ') : "*";
+
+    let wheres: string = where.length > 0 ? "where " + where.map((str) => `(${str})`).join(" AND ") : '';
+
+    return db.all(sql`
+      SELECT ${selects} FROM test ${wheres};
+    `);
   }
+
+  // get all() : T[] {
+    
+  //   return (async () => await this.execute());
+  //   // sql`
+  //   //  SELECT ${selects} FROM ${T.name}
+  //   // `;
+  // }
+
+  // get items() : T[] {
+  //   return this.all;
+  // }
 }
 
 export default Relation;
