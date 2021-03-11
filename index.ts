@@ -12,7 +12,7 @@ import Relation from './lib/relation';
 //   SELECT * FROM test;
 // `).then((res: any) => console.log(res));
 
-let relation = new Relation<Test>()
+let relation = new Relation<Test>();
 
 relation = relation.select(["id", "name"]);
 // relation = relation.where({ id: 1 });

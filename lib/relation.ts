@@ -3,7 +3,7 @@ import db from './db';
 import { sql } from './sql';
 
 interface QueryType<T> {
-  select: Set<KeysOf<T>>;
+  select: Set<keyof T>;
   where: string[];
   order: string[];
 }
@@ -16,12 +16,12 @@ class Relation<T> extends Array<T> {
     order: []
   };
 
-  select(fields: KeysOf<T>[]) : Relation<T> {
+  select(fields: (keyof T)[]) : Relation<T> {
     fields.forEach((f) => this.query.select.add(f));
     return this;
   }
 
-  where(condition: string | Record<KeysOf<T>, any>, not: boolean = false) : Relation<T> {
+  where(condition: string | RecordWithKeys<T, any>, not: boolean = false) : Relation<T> {
     let stringedCondition : string = '';
     if (typeof condition !== "string") {
       let equiv : '=' | '!=' = '=';
@@ -29,7 +29,9 @@ class Relation<T> extends Array<T> {
         equiv = '!=';
       }
 
-      stringedCondition = Object.keys(condition).map((key: KeysOf<T>) => `${key} ${equiv} "${condition[key]}"`).join(" AND ");
+      let keys : (keyof T)[] = Object.keys(condition) as (keyof T)[];
+
+      stringedCondition = keys.map((key: keyof T) => `${key} ${equiv} "${condition[key]}"`).join(" AND ");
     } else {
       stringedCondition = condition;
     }
@@ -37,10 +39,11 @@ class Relation<T> extends Array<T> {
     return this;
   }
 
-  order(order: string | Record<KeysOf<T>, "ASC" | "DESC">) : Relation<T> {
+  order(order: string | RecordWithKeys<T, "ASC" | "DESC">) : Relation<T> {
     let stringedOrder : string = '';
     if (typeof order !== "string") {
-      stringedOrder = Object.keys(order).map((key: KeysOf<T>) => `${key} ${order[key]}`).join(" ");
+      let keys : (keyof T)[] = Object.keys(order) as (keyof T)[];
+      stringedOrder = keys.map((key: keyof T) => `${key} ${order[key]}`).join(" ");
     } else {
       stringedOrder = order
     }
