@@ -1,0 +1,14 @@
+import BaseRelation from "../lib/base_relation";
+import BaseModel from "../lib/base_model";
+
+class TestRelation extends BaseRelation<Test> {
+
+}
+
+class TestModel extends BaseModel<Test>() {
+  static relation() {
+    return new TestRelation('test');
+  }
+}
+
+export default TestModel;

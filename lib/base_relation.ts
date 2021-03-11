@@ -8,20 +8,26 @@ interface QueryType<T> {
   order: string[];
 }
 
-class Relation<T> extends Array<T> {
+class BaseRelation<T extends DataType> extends Array<T> {
   private data: T[] = [];
   private query: QueryType<T> = {
     select: new Set(),
     where: [],
     order: []
   };
+  private tableName: string;
 
-  select(fields: (keyof T)[]) : Relation<T> {
+  constructor(tableName: string) {
+    super();
+    this.tableName = tableName;
+  }
+
+  select(fields: (keyof T)[]) : BaseRelation<T> {
     fields.forEach((f) => this.query.select.add(f));
     return this;
   }
 
-  where(condition: string | RecordWithKeys<T, any>, not: boolean = false) : Relation<T> {
+  where(condition: string | RecordWithKeys<T, any>, not: boolean = false) : BaseRelation<T> {
     let stringedCondition : string = '';
     if (typeof condition !== "string") {
       let equiv : '=' | '!=' = '=';
@@ -39,7 +45,7 @@ class Relation<T> extends Array<T> {
     return this;
   }
 
-  order(order: string | RecordWithKeys<T, "ASC" | "DESC">) : Relation<T> {
+  order(order: string | RecordWithKeys<T, "ASC" | "DESC">) : BaseRelation<T> {
     let stringedOrder : string = '';
     if (typeof order !== "string") {
       let keys : (keyof T)[] = Object.keys(order) as (keyof T)[];
@@ -53,6 +59,7 @@ class Relation<T> extends Array<T> {
   }
 
   async all() : Promise<T[]> {
+    if (this.tableName === '') throw Error("Must provide a table name");
     let { select, where, order } = this.query;
 
     let selects: string = select.size > 0 ?
@@ -63,10 +70,8 @@ class Relation<T> extends Array<T> {
     let orders: string = order.length > 0 ? "ORDER BY " + order.map((str) => `${str}`).join(", ") : '';
 
     let sqlString : string = sql`
-      SELECT ${selects} FROM test ${wheres} ${orders};
+      SELECT ${selects} FROM ${this.tableName} ${wheres} ${orders};
     `
-
-    console.log(sqlString);
 
     return db.all(sqlString);
   }
@@ -84,5 +89,5 @@ class Relation<T> extends Array<T> {
   // }
 }
 
-export default Relation;
+export default BaseRelation;
 export { db as Database };

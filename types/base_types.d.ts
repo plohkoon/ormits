@@ -1,4 +1,4 @@
 
 interface DataType {
-  name(): string;
+  data_name: string;
 }

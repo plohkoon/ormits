@@ -1,5 +1,5 @@
 
-import Relation from './lib/relation';
+import TestModel from './models/test';
 
 // Database.run(sql`
 //   CREATE TABLE IF NOT EXISTS test(
@@ -12,9 +12,9 @@ import Relation from './lib/relation';
 //   SELECT * FROM test;
 // `).then((res: any) => console.log(res));
 
-let relation = new Relation<Test>();
+// let relation = new BaseRelation<Test>();
 
-relation = relation.select(["id", "name"]);
+let relation = TestModel.select(["id", "name"]);
 // relation = relation.where({ id: 1 });
 // relation = relation.where('name = "bob"');
 // relation = relation.where({id: 2}, true);
