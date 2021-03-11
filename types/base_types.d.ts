@@ -1,0 +1,4 @@
+
+interface DataType {
+  name(): string;
+}

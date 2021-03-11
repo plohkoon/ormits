@@ -2,9 +2,24 @@
   "name": "js-orm",
   "version": "0.1.0",
   "description": "Typescript Implementation ORM",
-  "main": "index.js",
+  "main": "build/index.js",
   "repository": "https://github.com/plohkoon/js-orm.git",
   "author": "greg.huber@outlook.com",
   "license": "GNU",
-  "private": true
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "sqlite3": "^5.0.2",
+    "ts-node": "^9.1.1",
+    "typescript": "^4.2.3"
+  },
+  "scripts": {
+    "dev": "yarn nodemon",
+    "start": "node --es-module-specifier-resolution=node .",
+    "prestart": "yarn tsc -p tsconfig.json"
+  },
+  "devDependencies": {
+    "@types/sqlite3": "^3.1.7",
+    "nodemon": "^2.0.7"
+  }
 }

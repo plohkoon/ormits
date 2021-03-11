@@ -1,0 +1,6 @@
+{
+  "watch": ["."],
+  "ext": "ts",
+  "exclude": "build",
+  "exec": "yarn start || exit 1"
+}
