@@ -15,7 +15,8 @@
   },
   "scripts": {
     "dev": "yarn nodemon",
-    "start": "node --loader ts-node/esm --es-module-specifier-resolution=node index.ts",
+    "setup": "yarn start setup.ts",
+    "start": "node --loader ts-node/esm --es-module-specifier-resolution=node",
     "prestart": "yarn tsc -p tsconfig.json"
   },
   "devDependencies": {
