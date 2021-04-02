@@ -1,4 +1,4 @@
 
-interface DataType {
+export interface DataType {
   data_name: string;
 }

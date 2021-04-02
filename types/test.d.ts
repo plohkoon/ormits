@@ -1,3 +1,4 @@
+import { DataType } from "./base_types";
 
 class Test implements DataType {
   id: number;
@@ -7,3 +8,5 @@ class Test implements DataType {
     return "test";
   }
 }
+
+export default Test;

@@ -1,3 +1,5 @@
+import { DataType } from "../types/base_types";
+import { RecordWithKeys } from "../types/utils";
 import BaseRelation from "./base_relation";
 
 function BaseModel<T extends DataType>() {

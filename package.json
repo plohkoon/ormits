@@ -2,7 +2,7 @@
   "name": "js-orm",
   "version": "0.1.0",
   "description": "Typescript Implementation ORM",
-  "main": "build/index.js",
+  "main": "index.ts",
   "repository": "https://github.com/plohkoon/js-orm.git",
   "author": "greg.huber@outlook.com",
   "license": "GNU",
@@ -15,7 +15,7 @@
   },
   "scripts": {
     "dev": "yarn nodemon",
-    "start": "node --es-module-specifier-resolution=node .",
+    "start": "node --loader ts-node/esm --es-module-specifier-resolution=node index.ts",
     "prestart": "yarn tsc -p tsconfig.json"
   },
   "devDependencies": {
