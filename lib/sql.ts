@@ -4,8 +4,7 @@ function cleanSQL(sql: string): string {
 }
 
 function cleanWhiteSpace(str: string): string {
-  console.log(str);
-  return str.replaceAll(/\s{1,}/g, ' ').replaceAll(/^\s{1,}|\s{1,}$/ig, '')
+  return str.replace(/\s{1,}/g, ' ').replace(/^\s{1,}|\s{1,}$/ig, '')
 }
 
 function sql(strings: TemplateStringsArray, ...interopStrings: string[]) : string {
