@@ -2,7 +2,7 @@ import BaseRelation from "../lib/base_relation";
 import BaseModel from "../lib/base_model";
 import Test from "../types/test";
 
-class TestRelation extends BaseRelation<Test> {
+class TestRelation extends BaseRelation<Test, TestRelation> {
 
 }
 

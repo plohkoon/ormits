@@ -4,8 +4,9 @@ import BaseRelation from "./base_relation";
 
 function BaseModel<T extends DataType>() {
   class BaseModel {
+    static tableName = '';
     static relation(){
-      return new BaseRelation<T>('');
+      return new BaseRelation<T, BaseRelation<any, any>>('');
     }
     static select(fields: (keyof T)[]) {
       return this.relation().select(fields);

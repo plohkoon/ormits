@@ -10,7 +10,7 @@ interface QueryType<T> {
   order: string[];
 }
 
-class BaseRelation<T extends DataType> extends Array<T> {
+class BaseRelation<T extends DataType, K extends BaseRelation<any, any>> extends Array<T> {
   private data: T[] = [];
   private query: QueryType<T> = {
     select: new Set(),
@@ -24,12 +24,15 @@ class BaseRelation<T extends DataType> extends Array<T> {
     this.tableName = tableName;
   }
 
-  select(fields: (keyof T)[]) : BaseRelation<T> {
-    fields.forEach((f) => this.query.select.add(f));
-    return this;
+  duplicate = () : K => Object.create(this);
+
+  select(fields: (keyof T)[]) : K {
+    let dup = this.duplicate();
+    fields.forEach((f) => dup.query.select.add(f));
+    return dup;
   }
 
-  where(condition: string | RecordWithKeys<T, any>, not: boolean = false) : BaseRelation<T> {
+  where(condition: string | RecordWithKeys<T, any>, not: boolean = false) : K {
     let stringedCondition : string = '';
     if (typeof condition !== "string") {
       let equiv : '=' | '!=' = '=';
@@ -43,11 +46,13 @@ class BaseRelation<T extends DataType> extends Array<T> {
     } else {
       stringedCondition = condition;
     }
-    this.query.where.push(stringedCondition);
-    return this;
+
+    let dup = this.duplicate();
+    dup.query.where.push(stringedCondition);
+    return dup;
   }
 
-  order(order: string | RecordWithKeys<T, "ASC" | "DESC">) : BaseRelation<T> {
+  order(order: string | RecordWithKeys<T, "ASC" | "DESC">) : K {
     let stringedOrder : string = '';
     if (typeof order !== "string") {
       let keys : (keyof T)[] = Object.keys(order) as (keyof T)[];
@@ -56,8 +61,9 @@ class BaseRelation<T extends DataType> extends Array<T> {
       stringedOrder = order
     }
 
+    let dup = this.duplicate();
     this.query.order.push(stringedOrder);
-    return this;
+    return dup;
   }
 
   async all() : Promise<T[]> {
@@ -89,6 +95,10 @@ class BaseRelation<T extends DataType> extends Array<T> {
   // get items() : T[] {
   //   return this.all;
   // }
+
+  get relationQuery() {
+    return this.query;
+  }
 }
 
 export default BaseRelation;
