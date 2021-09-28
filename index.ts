@@ -7,6 +7,7 @@ console.log(TestModel.tableName);
 
 
 let relation = TestModel.select(["id", "name"]);
+relation = relation.select("hi, no");
 relation = relation.where({ id: 1, name: ["test"] });
 relation = relation.where('name = "bob"');
 // relation = relation.where({id: 2}, true);

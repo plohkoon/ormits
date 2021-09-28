@@ -2,7 +2,7 @@ import { sql } from "./sql";
 
 namespace ActiveRecord {
   interface QueryType<T> {
-    select: Set<keyof T>;
+    select: Set<keyof T | string>;
     where: string[];
     order: string[];
   }
@@ -31,9 +31,15 @@ namespace ActiveRecord {
       return Object.assign(Object.create(this), { ...this, data: []});
     }
 
-    select(fields: (keyof T)[]): this {
+    select(fields: (keyof T)[] | string): this {
       let dup = this.duplicate();
-      dup.query.select = new Set([ ...this.query.select, ...fields ]);
+
+      if (typeof fields === "string") {
+        const newFields = fields.split(/,\s{1,}/)
+        dup.query.select = new Set([ ...this.query.select, ...newFields ]);
+      } else {
+        dup.query.select = new Set([ ...this.query.select, ...fields ]);
+      }
       return dup;
     }
 
@@ -78,8 +84,12 @@ namespace ActiveRecord {
         throw new Exception("critical");
       }
 
-      static select(fields: (keyof T)[]): Relation<T> {
+      static select(fields: (keyof T)[] | string): Relation<T> {
         return new Relation<T>(this.tableName).select(fields);
+      }
+
+      static where(condition: OptionalOrArray<T> | string): Relation<T> {
+        return new Relation<T>(this.tableName).where(condition);
       }
     }
 
