@@ -1,5 +1,5 @@
 import { RunResult } from "sqlite3";
-import { Database } from "./lib/base_relation";
+import Database from "./lib/db";
 import { sql } from "./lib/sql";
 
 Database.run(sql`
