@@ -1,4 +1,4 @@
-import { OptionalOrArray, QueryType } from "../../types/base_types";
+import { OptionalOrArray, QueryType } from "types/base_types";
 
 export class Relation<T> { // TODO extends Array<T>{
   private data: T[] = [];

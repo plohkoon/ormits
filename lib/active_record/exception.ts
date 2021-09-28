@@ -1,4 +1,4 @@
-import { levels } from "../../types/base_types";
+import { levels } from "types/base_types";
 
 class Exception {
   level: levels;

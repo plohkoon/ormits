@@ -1,5 +1,4 @@
 
-import ActiveRecord from './lib/active_record';
 import TestModel from './models/test';
 import Test from './types/test';
 

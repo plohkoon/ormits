@@ -1,4 +1,4 @@
-import { OptionalOrArray } from "../../types/base_types";
+import { OptionalOrArray } from "types/base_types";
 import { Exception } from "./exception";
 import { Relation } from "./relation";
 

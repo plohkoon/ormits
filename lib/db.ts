@@ -86,7 +86,7 @@ class AsyncDatabase {
 // TODO: Fix this
 const dbPath = path.resolve(process.cwd(), 'data', 'dev.db');
 
-// const dbPath = __dirname + '/../data/project.db'
+// const dbPath = __dirname + '/data/project.db'
 
 const db = new AsyncDatabase(dbPath);
 
