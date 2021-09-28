@@ -1,10 +1,14 @@
-import { isConstructorDeclaration } from "typescript";
+import { sql } from "./sql";
 
 namespace ActiveRecord {
   interface QueryType<T> {
     select: Set<keyof T>;
-    where: [];
+    where: string[];
     order: string[];
+  }
+
+  type OptionalOrArray<T> = {
+    [K in keyof T]?: T[K] | Array<T[K]>;
   }
 
   // type OwnReturn = <T extends typeof Relation>(this: T): InstanceType<T>;
@@ -30,6 +34,35 @@ namespace ActiveRecord {
     select(fields: (keyof T)[]): this {
       let dup = this.duplicate();
       dup.query.select = new Set([ ...this.query.select, ...fields ]);
+      return dup;
+    }
+
+    where(condition: OptionalOrArray<T> | string): this {
+      const dup = this.duplicate();
+      const query = dup.query;
+
+      if (typeof condition === "string") {
+        if (!condition.match(/^\(.*\)$/))
+          condition = `(${condition})`;
+        query.where = query.where.concat(condition);
+      } else {
+        const conditions: string[] = [];
+        for (const key in condition) {
+          const value = condition[key];
+
+          if (Array.isArray(value)) {
+            const values = value.join(",");
+            conditions.push(`${key} IN (${values})`);
+          } else if (typeof value !== "undefined") {
+            // TODO this typing is stupid
+            conditions.push(`${key} = "${value as unknown as string}"`);
+          }
+        }
+
+        const joinedConditions = conditions.join(" AND ");
+        query.where.push(`(${joinedConditions})`);
+      }
+
       return dup;
     }
   }
