@@ -11,12 +11,12 @@
   "dependencies": {
     "sqlite3": "^5.0.2",
     "ts-node": "^10.2.1",
-    "typescript": "^4.4.3"
+    "typescript": "beta"
   },
   "scripts": {
     "dev": "yarn nodemon",
-    "setup": "yarn start setup.ts",
-    "start": "node --loader ts-node/esm --experimental-modules --es-module-specifier-resolution=node"
+    "setup": "bun setup.ts",
+    "start": "bun index.ts"
   },
   "devDependencies": {
     "@types/node": "*",
