@@ -7,7 +7,7 @@ import { BaseModel, model } from "lib/model";
 
 // }
 
-@model("tests")
+@model
 class TestModel extends BaseModel {
   id: number;
   name: string;
