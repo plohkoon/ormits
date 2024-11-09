@@ -1,14 +1,10 @@
-import Test from "types/test";
-// import Base, { table } from "lib.old/active_record/model";
 import { BaseModel, model } from "lib/model";
+import { property } from "lib/property";
 
-// @table("tests")
-// class TestModel extends Base<Test>() {
-
-// }
-
-@model
-class TestModel {}
-interface TestModel extends ReturnType<TestModel> {}
+@model("tests")
+class TestModel extends BaseModel {
+  @property()
+  id: number;
+}
 
 export default TestModel;

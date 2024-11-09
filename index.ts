@@ -1,9 +1,6 @@
 import TestModel from "./models/test";
-import Test from "./types/test";
 
 console.log(TestModel.tableName);
-const select = TestModel.select(["id", "name"]);
-console.log(select);
 
 // let relation = TestModel.select(["id", "name"]);
 // relation = relation.select("hi, no");
