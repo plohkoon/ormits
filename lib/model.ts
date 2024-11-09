@@ -8,7 +8,10 @@ export abstract class BaseModel {
       return this.__tableName;
     }
 
-    return this.name.replace(/([A-Z])/g, "_$1").toLowerCase().slice(1);
+    return this.name
+      .replace(/([A-Z])/g, "_$1")
+      .toLowerCase()
+      .slice(1);
   }
 }
 
@@ -43,30 +46,35 @@ export abstract class BaseModel {
 // }
 
 export function model<This extends ConstructorFunctionType>(
-  Constructor: This,
+  Constructor: This
   // { kind, name, addInitializer }: ClassDecoratorContext
 ) {
   return class extends Constructor {
+    static name: string = Constructor.name;
     static __tableName: string;
     static get tableName(): string {
       if (this.__tableName) {
         return this.__tableName;
       }
 
-      return this.name.replace(/([A-Z])/g, "_$1").toLowerCase().slice(1);
+      return this.name
+        .replace(/([A-Z])/g, "_$1")
+        .toLowerCase()
+        .slice(1);
     }
 
     static select(fields: (keyof InstanceType<This>)[]): Relation<This> {
-      return new Relation<This>(this.tableName).select(fields);
+      return new Relation<This>(this.tableName).select([]);
     }
 
-    static where(condition: OptionalOrArray<InstanceType<This>>): Relation<This> {
+    static where(
+      condition: OptionalOrArray<InstanceType<This>>
+    ): Relation<This> {
       return new Relation(this.tableName);
     }
 
-    constructor(...args) {
-      super()
+    constructor(..._args: any[]) {
+      super();
     }
-  }
+  };
 }
-

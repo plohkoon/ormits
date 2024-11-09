@@ -8,15 +8,7 @@ import { BaseModel, model } from "lib/model";
 // }
 
 @model
-class TestModel extends BaseModel {
-  id: number;
-  name: string;
-
-  constructor(id: number, name: string) {
-    super();
-    this.id = id;
-    this.name = name;
-  }
-}
+class TestModel {}
+interface TestModel extends ReturnType<TestModel> {}
 
 export default TestModel;
