@@ -9,18 +9,18 @@
   "private": true,
   "type": "module",
   "dependencies": {
-    "sqlite3": "^5.0.2",
-    "ts-node": "^10.2.1",
-    "typescript": "^4.4.3"
+    "sqlite3": "^5.1.7",
+    "ts-node": "^10.9.2",
+    "typescript": "next"
   },
   "scripts": {
     "dev": "yarn nodemon",
-    "setup": "yarn start setup.ts",
-    "start": "node --loader ts-node/esm --experimental-modules --es-module-specifier-resolution=node"
+    "setup": "bun setup.ts",
+    "start": "bun index.ts"
   },
   "devDependencies": {
-    "@types/node": "*",
-    "@types/sqlite3": "^3.1.7",
-    "nodemon": "^2.0.7"
+    "@types/node": "^22.5.4",
+    "@types/sqlite3": "^3.1.11",
+    "nodemon": "^3.1.7"
   }
 }

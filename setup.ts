@@ -1,6 +1,6 @@
 import { RunResult } from "sqlite3";
-import Database from "./lib/db";
-import { sql } from "./lib/sql";
+import Database from "./lib.old/db";
+import { sql } from "./lib.old/sql";
 
 Database.run(sql`
   CREATE TABLE IF NOT EXISTS test(

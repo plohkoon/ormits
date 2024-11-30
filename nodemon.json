@@ -2,5 +2,5 @@
   "watch": ["."],
   "ext": "ts",
   "exclude": "build",
-  "exec": "yarn start index.ts || exit 1"
+  "exec": "bun start || exit 1"
 }

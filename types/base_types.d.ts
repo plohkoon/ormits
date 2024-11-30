@@ -14,3 +14,5 @@ type OptionalOrArray<T> = {
 }
 
 type levels = "log" | "warn" | "error" | "critical"
+
+type ConstructorFunctionType<Args=any[], Return=any> = new (...args: Args) => Return;
