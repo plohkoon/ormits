@@ -7,20 +7,20 @@
   "author": "greg.huber@outlook.com",
   "license": "GNU",
   "private": true,
-  "type": "module",
   "dependencies": {
-    "sqlite3": "^5.0.2",
-    "ts-node": "^10.2.1",
-    "typescript": "^4.4.3"
+    "sqlite3": "^6.0.1"
   },
+  "type": "module",
   "scripts": {
     "dev": "yarn nodemon",
     "setup": "yarn start setup.ts",
-    "start": "node --loader ts-node/esm --experimental-modules --es-module-specifier-resolution=node"
+    "start": "tsx",
+    "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
-    "@types/node": "*",
-    "@types/sqlite3": "^3.1.7",
-    "nodemon": "^2.0.7"
+    "@types/node": "^24",
+    "nodemon": "^3.1.14",
+    "tsx": "^4.23.13",
+    "typescript": "^7.0.2"
   }
 }
